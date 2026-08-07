@@ -1,0 +1,111 @@
+@{
+    ViewData["Title"] = "Discover";
+}
+
+<section class="discover-section">
+    <div class="discover-header-card">
+        <div class="discover-header-top">
+            <div>
+                <span class="eyebrow">discover</span>
+                <h1 class="discover-title">Welcome, how can we assist you?</h1>
+                <p class="discover-subtitle">
+                    Explore robotics solutions, data tools, accessories, and learning resources across the RoboConnect platform.
+                </p>
+            </div>
+        </div>
+
+        <div class="discover-search-wrap">
+            <form class="discover-search-bar" method="get" action="#">
+                <input type="text" placeholder="Search robotics platforms, providers, accessories, or tutorials" />
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="discover-chip-row">
+            <span class="discover-chip active">Solutions</span>
+            <span class="discover-chip">Robots</span>
+            <span class="discover-chip">Data</span>
+            <span class="discover-chip">Accessories</span>
+            <span class="discover-chip">Tutorials</span>
+        </div>
+
+        <div class="discover-stats-row">
+            <div class="discover-stat-card">
+                <span class="stat-label">Providers</span>
+                <strong>120+</strong>
+            </div>
+            <div class="discover-stat-card">
+                <span class="stat-label">Robots</span>
+                <strong>48</strong>
+            </div>
+            <div class="discover-stat-card">
+                <span class="stat-label">Datasets</span>
+                <strong>96</strong>
+            </div>
+            <div class="discover-stat-card">
+                <span class="stat-label">Tutorials</span>
+                <strong>210</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="discover-grid">
+        <article class="discover-content-card">
+            <span class="content-badge">Solutions</span>
+            <h2>Campus Delivery Workflow Kit</h2>
+            <p>
+                A ready-to-test delivery robotics workflow for schools, hospitals, and smart campuses.
+            </p>
+            <a class="content-link" asp-controller="Providers" asp-action="Index" asp-route-type="SolutionProvider">Explore Providers</a>
+        </article>
+
+        <article class="discover-content-card">
+            <span class="content-badge">Robots</span>
+            <h2>Assistive Service Robot Pack</h2>
+            <p>
+                Featured service robots designed for accessibility support, guided interaction, and classroom assistance.
+            </p>
+            <a class="content-link" asp-controller="Requests" asp-action="Create">Submit a Request</a>
+        </article>
+
+        <article class="discover-content-card">
+            <span class="content-badge">Data</span>
+            <h2>Sensor Analytics Starter Stack</h2>
+            <p>
+                Explore starter pipelines for robot telemetry, route analytics, and usage monitoring.
+            </p>
+            <a class="content-link" asp-controller="Hub" asp-action="Index" asp-route-topic="Data Science">Open Discussion</a>
+        </article>
+
+        <article class="discover-content-card">
+            <span class="content-badge">Accessories</span>
+            <h2>Modular Mount and Gripper Set</h2>
+            <p>
+                Discover expandable accessories for assistive, logistics, and lab automation platforms.
+            </p>
+            <a class="content-link" asp-controller="Providers" asp-action="Index" asp-route-type="AccessoryDesigner">Browse Designers</a>
+        </article>
+
+        <article class="discover-content-card">
+            <span class="content-badge">Tutorials</span>
+            <h2>Getting Started with Robo Integration</h2>
+            <p>
+                Beginner-friendly tutorials covering deployment planning, integration support, and maintenance readiness.
+            </p>
+            <a class="content-link" asp-controller="Chat" asp-action="Index" asp-route-room="General">Join Chat</a>
+        </article>
+
+        <article class="discover-content-card">
+            <span class="content-badge">Featured</span>
+            <h2>Platform Overview Dashboard</h2>
+            <p>
+                View a fast summary of requests, discussions, providers, and live activity in one dashboard.
+            </p>
+            <a class="content-link" asp-controller="Dashboard" asp-action="Index">View Dashboard</a>
+        </article>
+    </div>
+
+    <div class="discover-more-wrap">
+        <a class="btn-primary-xl" asp-controller="Providers" asp-action="Index">See more</a>
+    </div>
+</section>

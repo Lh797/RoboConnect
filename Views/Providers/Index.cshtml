@@ -1,0 +1,92 @@
+@model List<ProviderProfileViewModel>
+
+@{
+    ViewData["Title"] = "Providers";
+    var selectedType = (ViewBag.SelectedType as string) ?? "All";
+}
+
+<section class="providers-page">
+    <div class="providers-header-card">
+        <span class="eyebrow">provider marketplace</span>
+        <h1>Find the right robotics partner</h1>
+        <p>
+            Explore solution providers, hardware service providers, and accessory designers across the RoboConnect ecosystem.
+        </p>
+
+        <div class="provider-filter-row">
+            <a asp-controller="Providers" asp-action="Index"
+               class="filter-chip @(selectedType == "All" ? "active" : "")">
+                All
+            </a>
+            <a asp-controller="Providers" asp-action="Index" asp-route-type="SolutionProvider"
+               class="filter-chip @(selectedType == "SolutionProvider" ? "active" : "")">
+                Solution Providers
+            </a>
+            <a asp-controller="Providers" asp-action="Index" asp-route-type="HardwareProvider"
+               class="filter-chip @(selectedType == "HardwareProvider" ? "active" : "")">
+                Hardware Providers
+            </a>
+            <a asp-controller="Providers" asp-action="Index" asp-route-type="AccessoryDesigner"
+               class="filter-chip @(selectedType == "AccessoryDesigner" ? "active" : "")">
+                Accessory Designers
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state-card">
+            <div class="empty-state-icon">◌</div>
+            <h2>No providers found</h2>
+            <p>
+                There are no providers matching the selected filter right now. Try another category.
+            </p>
+            <a asp-controller="Providers" asp-action="Index" class="btn-secondary-dark small-width">Show All</a>
+        </div>
+    }
+    else
+    {
+        <div class="providers-grid">
+            @foreach (var provider in Model)
+            {
+                <article class="provider-card">
+                    <div class="provider-card-top">
+                        <div>
+                            <span class="provider-type-badge">@provider.ProviderType</span>
+                            <h2>@provider.DisplayName</h2>
+                        </div>
+
+                        @if (provider.IsFeatured)
+                        {
+                            <span class="featured-badge">Featured</span>
+                        }
+                    </div>
+
+                    <p class="provider-bio">@provider.Bio</p>
+
+                    <div class="provider-tags">
+                        @foreach (var tag in provider.ExpertiseTags)
+                        {
+                            <span class="provider-tag">@tag</span>
+                        }
+                    </div>
+
+                    <div class="provider-meta-grid">
+                        <div class="provider-meta-item">
+                            <span class="meta-label">Rating</span>
+                            <strong>@provider.Rating.ToString("0.0") / 5.0</strong>
+                        </div>
+                        <div class="provider-meta-item">
+                            <span class="meta-label">Contact</span>
+                            <strong>@provider.ContactEmail</strong>
+                        </div>
+                    </div>
+
+                    <div class="provider-card-actions">
+                        <a href="mailto:@provider.ContactEmail" class="btn-primary-xl provider-contact-btn">Contact Provider</a>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>

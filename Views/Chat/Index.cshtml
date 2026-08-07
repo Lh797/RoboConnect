@@ -1,0 +1,140 @@
+@model List<ChatMessageViewModel>
+
+@{
+    ViewData["Title"] = "Chat Space";
+    var selectedRoom = (ViewBag.SelectedRoom as string) ?? "All";
+    var totalCount = (int)(ViewBag.TotalCount ?? 0);
+}
+
+<section class="chat-page">
+    <div class="chat-header-card">
+        <span class="eyebrow">real-time chat</span>
+        <h1>Chat Space</h1>
+        <p>
+            Connect with the RoboConnect community across different rooms. Share ideas, ask questions, and collaborate in real time.
+        </p>
+
+        <div class="chat-room-row">
+            <a asp-controller="Chat" asp-action="Index" class="chat-room-chip @(selectedRoom == "All" ? "active" : "")">All</a>
+            <a asp-controller="Chat" asp-action="Index" asp-route-room="General" class="chat-room-chip @(selectedRoom == "General" ? "active" : "")">General</a>
+            <a asp-controller="Chat" asp-action="Index" asp-route-room="Solutions" class="chat-room-chip @(selectedRoom == "Solutions" ? "active" : "")">Solutions</a>
+            <a asp-controller="Chat" asp-action="Index" asp-route-room="Hardware" class="chat-room-chip @(selectedRoom == "Hardware" ? "active" : "")">Hardware</a>
+            <a asp-controller="Chat" asp-action="Index" asp-route-room="Accessories" class="chat-room-chip @(selectedRoom == "Accessories" ? "active" : "")">Accessories</a>
+        </div>
+    </div>
+
+    <div class="chat-layout">
+        <aside class="chat-sidebar">
+            <h2 class="chat-sidebar-title">Rooms</h2>
+            <ul class="chat-room-list">
+                <li>
+                    <a asp-controller="Chat" asp-action="Index" class="@(selectedRoom == "All" ? "active" : "")">
+                        <span class="room-dot all"></span>
+                        <span>All Rooms</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Chat" asp-action="Index" asp-route-room="General" class="@(selectedRoom == "General" ? "active" : "")">
+                        <span class="room-dot general"></span>
+                        <span>General</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Chat" asp-action="Index" asp-route-room="Solutions" class="@(selectedRoom == "Solutions" ? "active" : "")">
+                        <span class="room-dot solutions"></span>
+                        <span>Solutions</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Chat" asp-action="Index" asp-route-room="Hardware" class="@(selectedRoom == "Hardware" ? "active" : "")">
+                        <span class="room-dot hardware"></span>
+                        <span>Hardware</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Chat" asp-action="Index" asp-route-room="Accessories" class="@(selectedRoom == "Accessories" ? "active" : "")">
+                        <span class="room-dot accessories"></span>
+                        <span>Accessories</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="chat-sidebar-stats">
+                <div class="chat-stat-item">
+                    <span class="meta-label">Total Messages</span>
+                    <strong>@totalCount</strong>
+                </div>
+            </div>
+        </aside>
+
+        <div class="chat-main">
+            @if (TempData["ChatSuccessMessage"] != null)
+            {
+                <div class="chat-success-message">@TempData["ChatSuccessMessage"]</div>
+            }
+
+            <div asp-validation-summary="ModelOnly" class="form-validation-summary"></div>
+
+            <div class="chat-conversation-panel">
+                @if (!Model.Any())
+                {
+                    <div class="chat-empty-state">
+                        <div class="empty-state-icon">◌</div>
+                        <h2>No messages yet</h2>
+                        <p>Be the first to start the conversation in this room.</p>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var message in Model)
+                    {
+                        <div class="chat-bubble-row @(message.IsCurrentUser ? "sent" : "received")">
+                            <div class="chat-bubble">
+                                <div class="chat-bubble-header">
+                                    <strong>@message.SenderName</strong>
+                                    <span class="chat-bubble-room">@message.Room</span>
+                                </div>
+                                <p class="chat-bubble-text">@message.MessageText</p>
+                                <span class="chat-bubble-time">@message.GetSentAgo()</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="chat-compose-card">
+                <h2 class="compose-title">Send a Message</h2>
+
+                <form asp-controller="Chat" asp-action="SendMessage" method="post" class="chat-compose-form">
+                    <div class="compose-form-row">
+                        <div class="form-group">
+                            <label for="SenderName">Your Name</label>
+                            <input id="SenderName" name="SenderName" class="form-control dark-input" placeholder="Enter your name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Room">Room</label>
+                            <select id="Room" name="Room" class="form-control dark-input">
+                                <option value="General">General</option>
+                                <option value="Solutions">Solutions</option>
+                                <option value="Hardware">Hardware</option>
+                                <option value="Accessories">Accessories</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="MessageText">Message</label>
+                        <textarea id="MessageText" name="MessageText" class="form-control dark-input dark-textarea" rows="3" placeholder="Type your message"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary-xl chat-send-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

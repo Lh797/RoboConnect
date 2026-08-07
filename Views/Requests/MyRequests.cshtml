@@ -1,0 +1,99 @@
+@model List<RobotRequest>
+
+@{
+    ViewData["Title"] = "My Requests";
+}
+
+<section class="my-requests-page">
+    <div class="my-requests-header-card">
+        <span class="eyebrow">request tracking</span>
+        <h1>My Requests</h1>
+        <p>
+            Review submitted robotic requests, feature needs, preferred timelines, and contact preferences in one place.
+        </p>
+
+        <div class="my-requests-actions">
+            <a asp-controller="Requests" asp-action="Create" class="btn-primary-xl small-width">Create New Request</a>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state-card">
+            <div class="empty-state-icon">◌</div>
+            <h2>No requests yet</h2>
+            <p>
+                You have not submitted any robotic requests yet. Start by creating one and it will appear here.
+            </p>
+            <a asp-controller="Requests" asp-action="Create" class="btn-secondary-dark small-width">Go to Request Form</a>
+        </div>
+    }
+    else
+    {
+        <div class="requests-list-grid">
+            @foreach (var request in Model)
+            {
+                var features = string.IsNullOrWhiteSpace(request.FeaturesSummary)
+                    ? new List<string>()
+                    : request.FeaturesSummary.Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                        .Select(x => x.Trim())
+                        .ToList();
+
+                <article class="submitted-request-card">
+                    <div class="request-card-top">
+                        <div>
+                            <span class="request-card-tag">@request.RobotType</span>
+                            <h2>@request.RequestTitle</h2>
+                        </div>
+                        <div class="request-id-badge">#@request.Id</div>
+                    </div>
+
+                    <p class="submitted-request-description">
+                        @request.Description
+                    </p>
+
+                    <div class="request-meta-grid">
+                        <div class="request-meta-item">
+                            <span class="meta-label">Use Case</span>
+                            <strong>@request.UseCaseCategory</strong>
+                        </div>
+                        <div class="request-meta-item">
+                            <span class="meta-label">Budget</span>
+                            <strong>@request.BudgetRange</strong>
+                        </div>
+                        <div class="request-meta-item">
+                            <span class="meta-label">Timeline</span>
+                            <strong>@request.PreferredTimeline</strong>
+                        </div>
+                        <div class="request-meta-item">
+                            <span class="meta-label">Contact</span>
+                            <strong>@request.ContactPreference</strong>
+                        </div>
+                    </div>
+
+                    <div class="selected-features-block">
+                        <span class="meta-label">Selected Features</span>
+
+                        @if (features.Any())
+                        {
+                            <div class="selected-feature-chips">
+                                @foreach (var feature in features)
+                                {
+                                    <span class="selected-feature-chip">@feature</span>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="no-feature-text">No optional features selected.</p>
+                        }
+                    </div>
+
+                    <div class="request-card-footer">
+                        <span>Submitted @request.SubmittedAt.ToString("dd MMM yyyy, HH:mm")</span>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>

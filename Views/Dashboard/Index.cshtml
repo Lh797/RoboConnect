@@ -1,0 +1,144 @@
+@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="dashboard-page">
+    <div class="dashboard-header-card">
+        <span class="eyebrow">analytics</span>
+        <h1>Platform Overview</h1>
+        <p>
+            A live snapshot of activity across requests, providers, discussions, and chat in the RoboConnect ecosystem.
+        </p>
+    </div>
+
+    <div class="dashboard-stats-grid">
+        <div class="dashboard-stat-card">
+            <span class="stat-card-icon">➤</span>
+            <div class="stat-card-body">
+                <span class="stat-card-value">@Model.Stats.TotalRequests</span>
+                <span class="stat-card-label">Total Requests</span>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <span class="stat-card-icon">◈</span>
+            <div class="stat-card-body">
+                <span class="stat-card-value">@Model.Stats.TotalProviders</span>
+                <span class="stat-card-label">Total Providers</span>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <span class="stat-card-icon">▤</span>
+            <div class="stat-card-body">
+                <span class="stat-card-value">@Model.Stats.TotalDiscussionPosts</span>
+                <span class="stat-card-label">Discussion Posts</span>
+            </div>
+        </div>
+
+        <div class="dashboard-stat-card">
+            <span class="stat-card-icon">💬</span>
+            <div class="stat-card-body">
+                <span class="stat-card-value">@Model.Stats.TotalChatMessages</span>
+                <span class="stat-card-label">Chat Messages</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-two-col">
+        <div class="dashboard-breakdown-section">
+            <h2 class="dashboard-section-heading">Requests by Robot Type</h2>
+            <div class="breakdown-chips">
+                @foreach (var item in Model.RequestsByRobotType)
+                {
+                    <div class="breakdown-chip">
+                        <span class="breakdown-chip-label">@item.Label</span>
+                        <span class="breakdown-chip-count">@item.Count</span>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="dashboard-breakdown-section">
+            <h2 class="dashboard-section-heading">Posts by Topic</h2>
+            <div class="breakdown-chips">
+                @foreach (var item in Model.PostsByTopic)
+                {
+                    <div class="breakdown-chip">
+                        <span class="breakdown-chip-label">@item.Label</span>
+                        <span class="breakdown-chip-count">@item.Count</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-activity-section">
+        <h2 class="dashboard-section-heading">Recent Activity</h2>
+
+        <div class="activity-columns">
+            <div class="activity-column">
+                <h3 class="activity-column-title">Latest Requests</h3>
+                <div class="activity-timeline">
+                    @foreach (var item in Model.RecentRequests)
+                    {
+                        <div class="activity-item">
+                            <div class="activity-dot request"></div>
+                            <div class="activity-content">
+                                <strong class="activity-title">@item.Title</strong>
+                                <span class="activity-subtitle">@item.Subtitle · @item.Meta</span>
+                                <span class="activity-time">@item.TimeAgo</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="activity-column">
+                <h3 class="activity-column-title">Latest Discussions</h3>
+                <div class="activity-timeline">
+                    @foreach (var item in Model.RecentPosts)
+                    {
+                        <div class="activity-item">
+                            <div class="activity-dot post"></div>
+                            <div class="activity-content">
+                                <strong class="activity-title">@item.Title</strong>
+                                <span class="activity-subtitle">@item.Subtitle · @item.Meta</span>
+                                <span class="activity-time">@item.TimeAgo</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="activity-column">
+                <h3 class="activity-column-title">Latest Messages</h3>
+                <div class="activity-timeline">
+                    @foreach (var item in Model.RecentMessages)
+                    {
+                        <div class="activity-item">
+                            <div class="activity-dot message"></div>
+                            <div class="activity-content">
+                                <strong class="activity-title">@item.Title</strong>
+                                <span class="activity-subtitle">@item.Subtitle · @item.Meta</span>
+                                <span class="activity-time">@item.TimeAgo</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-quick-actions">
+        <h2 class="dashboard-section-heading">Quick Actions</h2>
+        <div class="quick-actions-grid">
+            <a asp-controller="Requests" asp-action="Create" class="btn-primary-xl quick-action-btn">Create Request</a>
+            <a asp-controller="Providers" asp-action="Index" class="btn-secondary-dark quick-action-btn">Browse Providers</a>
+            <a asp-controller="Hub" asp-action="Index" class="btn-secondary-dark quick-action-btn">Open Hub</a>
+            <a asp-controller="Chat" asp-action="Index" class="btn-secondary-dark quick-action-btn">Open Chat</a>
+        </div>
+    </div>
+</section>

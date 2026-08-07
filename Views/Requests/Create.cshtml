@@ -1,0 +1,138 @@
+@model RobotRequestFormViewModel
+
+@{
+    ViewData["Title"] = "Request Submission";
+}
+
+<section class="request-page">
+    <div class="request-card">
+        <div class="request-header">
+            <span class="eyebrow">request submission</span>
+            <h1>Submit Your Request</h1>
+            <p>
+                Tell the RoboConnect ecosystem what you need, and we will help connect your request
+                with the right robotics solution, service provider, or collaboration path.
+            </p>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="form-success-message">
+                <div class="success-message-content">
+                    <span>@TempData["SuccessMessage"]</span>
+                    <a asp-controller="Requests" asp-action="MyRequests" class="success-link-btn">View My Requests</a>
+                </div>
+            </div>
+        }
+
+        <div asp-validation-summary="ModelOnly" class="form-validation-summary"></div>
+
+        <form asp-controller="Requests" asp-action="Create" method="post" class="request-form">
+            <div class="form-group">
+                <label asp-for="RequestTitle"></label>
+                <input asp-for="RequestTitle" class="form-control dark-input" placeholder="Enter a short request title" />
+                <span asp-validation-for="RequestTitle" class="field-validation"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RobotType"></label>
+                <select asp-for="RobotType" class="form-control dark-input">
+                    <option value="">Select a type</option>
+                    <option>Service Robot</option>
+                    <option>Educational Robot</option>
+                    <option>Delivery Robot</option>
+                    <option>Industrial Robot</option>
+                    <option>Assistive Robot</option>
+                    <option>Research Platform</option>
+                </select>
+                <span asp-validation-for="RobotType" class="field-validation"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UseCaseCategory"></label>
+                <input asp-for="UseCaseCategory" class="form-control dark-input" placeholder="e.g. Education, Logistics, Accessibility" />
+                <span asp-validation-for="UseCaseCategory" class="field-validation"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control dark-input dark-textarea" rows="5" placeholder="Describe your robotic use case, pain points, and expected outcome"></textarea>
+                <span asp-validation-for="Description" class="field-validation"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="feature-section-label">Features Needed</label>
+                <div class="feature-check-grid">
+                    <label class="feature-check-card">
+                        <input asp-for="NeedDataAnalytics" />
+                        <span>Data Analytics</span>
+                    </label>
+
+                    <label class="feature-check-card">
+                        <input asp-for="NeedCustomAccessory" />
+                        <span>Custom Accessory</span>
+                    </label>
+
+                    <label class="feature-check-card">
+                        <input asp-for="NeedMaintenanceSupport" />
+                        <span>Maintenance Support</span>
+                    </label>
+
+                    <label class="feature-check-card">
+                        <input asp-for="NeedIntegrationSupport" />
+                        <span>Integration Support</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BudgetRange"></label>
+                <select asp-for="BudgetRange" class="form-control dark-input">
+                    <option value="">Select a range</option>
+                    <option>Under HKD 10,000</option>
+                    <option>HKD 10,000 - 50,000</option>
+                    <option>HKD 50,001 - 100,000</option>
+                    <option>Above HKD 100,000</option>
+                </select>
+                <span asp-validation-for="BudgetRange" class="field-validation"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PreferredTimeline"></label>
+                <select asp-for="PreferredTimeline" class="form-control dark-input">
+                    <option value="">Select a timeline</option>
+                    <option>Within 2 weeks</option>
+                    <option>Within 1 month</option>
+                    <option>Within 3 months</option>
+                    <option>Flexible / exploratory</option>
+                </select>
+                <span asp-validation-for="PreferredTimeline" class="field-validation"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactPreference"></label>
+                <select asp-for="ContactPreference" class="form-control dark-input">
+                    <option value="">Select contact preference</option>
+                    <option>Email</option>
+                    <option>Phone</option>
+                    <option>Platform Chat</option>
+                    <option>Video Meeting</option>
+                </select>
+                <span asp-validation-for="ContactPreference" class="field-validation"></span>
+            </div>
+
+            <div class="request-form-actions">
+                <button type="submit" class="btn-primary-xl request-submit-btn">
+                    Submit Request
+                </button>
+                <a asp-controller="Requests" asp-action="MyRequests" class="btn-secondary-dark request-secondary-btn">
+                    View My Requests
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

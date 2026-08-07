@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero-section">
+    <div class="hero-card">
+        <div class="hero-copy">
+            <span class="eyebrow">mobot platform</span>
+            <h1>Connect robotics ideas, experts, and solutions in one place.</h1>
+            <p class="hero-text">
+                RoboConnect is a modern collaboration platform for robotic requests, solution providers,
+                hardware services, accessory designers, and data-driven improvement.
+            </p>
+
+            <div class="hero-actions">
+                <a asp-controller="Requests" asp-action="Create" class="btn-primary-xl">
+    Submit a Robotic Request
+</a>
+                <a href="#features" class="btn-secondary-dark">Explore Features</a>
+            </div>
+        </div>
+
+        <div class="hero-panel">
+            <div class="mini-stat">
+                <span class="mini-stat-label">Live platform</span>
+                <strong>150K</strong>
+                <span class="mini-stat-sub">Interactions</span>
+            </div>
+            <div class="mini-stat">
+                <span class="mini-stat-label">Experts</span>
+                <strong>10+</strong>
+                <span class="mini-stat-sub">Cross-domain collaborators</span>
+            </div>
+            <div class="mini-stat">
+                <span class="mini-stat-label">Projects</span>
+                <strong>30</strong>
+                <span class="mini-stat-sub">Solution pilots</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="ecosystem" class="intro-section">
+    <div class="section-heading">
+        <span class="eyebrow">why roboconnect</span>
+        <h2>Built for a flexible robotics ecosystem</h2>
+        <p>
+            From end-user requests to analytics and accessory integration, the platform helps teams
+            launch robotics solutions faster with a mobile-first experience.
+        </p>
+    </div>
+</section>
+
+<section id="features" class="feature-grid">
+    <article class="feature-card">
+        <div class="feature-icon">◎</div>
+        <h3>End-user Requests</h3>
+        <p>
+            Capture robotic needs clearly through guided requests so providers can respond with practical,
+            tailored solutions.
+        </p>
+    </article>
+
+    <article class="feature-card">
+        <div class="feature-icon">◌</div>
+        <h3>Expert Collaboration</h3>
+        <p>
+            Bring developers, analysts, and robotics specialists together in a shared hub for discussion
+            and project refinement.
+        </p>
+    </article>
+
+    <article class="feature-card">
+        <div class="feature-icon">◍</div>
+        <h3>Hardware Services</h3>
+        <p>
+            Support maintenance, customization, and field-ready add-ons through a provider-friendly service layer.
+        </p>
+    </article>
+
+    <article class="feature-card">
+        <div class="feature-icon">◐</div>
+        <h3>Data Insights</h3>
+        <p>
+            Turn robot usage and operational feedback into analytics that improve performance and decision-making.
+        </p>
+    </article>
+</section>
+
+<section class="cta-strip">
+    <div class="cta-card">
+        <div>
+            <span class="eyebrow">get started</span>
+            <h2>Start your first mobot request today.</h2>
+            <p>
+                Build the bridge between users, robotics providers, and intelligent operational support.
+            </p>
+        </div>
+        <a href="#" class="btn-primary-xl small-width">Create Request</a>
+    </div>
+</section>

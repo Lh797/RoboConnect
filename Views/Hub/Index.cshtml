@@ -1,0 +1,124 @@
+@model List<DiscussionPostViewModel>
+
+@{
+    ViewData["Title"] = "Collaboration Hub";
+    var selectedTopic = (ViewBag.SelectedTopic as string) ?? "All";
+    var totalPosts = (int)(ViewBag.TotalPosts ?? 0);
+}
+
+<section class="hub-page">
+    <div class="hub-header-card">
+        <span class="eyebrow">community</span>
+        <h1>Discussion Board</h1>
+        <p>
+            Share knowledge, ask questions, and collaborate with the RoboConnect community across robotics topics.
+        </p>
+
+        <div class="hub-filter-row">
+            <a asp-controller="Hub" asp-action="Index" class="filter-chip @(selectedTopic == "All" ? "active" : "")">All</a>
+            <a asp-controller="Hub" asp-action="Index" asp-route-topic="Data Science" class="filter-chip @(selectedTopic == "Data Science" ? "active" : "")">Data Science</a>
+            <a asp-controller="Hub" asp-action="Index" asp-route-topic="Development" class="filter-chip @(selectedTopic == "Development" ? "active" : "")">Development</a>
+            <a asp-controller="Hub" asp-action="Index" asp-route-topic="Hardware" class="filter-chip @(selectedTopic == "Hardware" ? "active" : "")">Hardware</a>
+            <a asp-controller="Hub" asp-action="Index" asp-route-topic="Accessories" class="filter-chip @(selectedTopic == "Accessories" ? "active" : "")">Accessories</a>
+        </div>
+    </div>
+
+    @if (TempData["HubSuccessMessage"] != null)
+    {
+        <div class="hub-success-message">@TempData["HubSuccessMessage"]</div>
+    }
+
+    <div class="hub-layout">
+        <div class="hub-posts-section">
+            <div class="hub-section-heading-row">
+                <h2>Recent Discussions</h2>
+                <span class="hub-post-count">@totalPosts total</span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="form-validation-summary"></div>
+
+            @if (!Model.Any())
+            {
+                <div class="empty-state-card">
+                    <div class="empty-state-icon">◌</div>
+                    <h2>No discussions yet</h2>
+                    <p>
+                        There are no posts in this topic yet. Be the first to start the conversation.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="hub-posts-grid">
+                    @foreach (var post in Model)
+                    {
+                        <article class="discussion-post-card">
+                            <div class="post-card-top">
+                                <span class="post-topic-badge">@post.TopicTag</span>
+                                <span class="post-like-count">♥ @post.LikeCount</span>
+                            </div>
+
+                            <h3 class="post-title">@post.Title</h3>
+                            <p class="post-content">@post.Content</p>
+
+                            <div class="post-card-footer">
+                                <div class="post-author-row">
+                                    <span class="post-author-avatar">@post.AuthorName.FirstOrDefault()</span>
+                                    <div>
+                                        <strong class="post-author-name">@post.AuthorName</strong>
+                                        <span class="post-time">@post.GetPostedAgo()</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="hub-compose-section">
+            <div class="hub-compose-card">
+                <h2 class="compose-heading">Interactive Space</h2>
+                <p class="compose-subtext">
+                    Share a question, insight, or project update with the community.
+                </p>
+
+                <form asp-controller="Hub" asp-action="CreatePost" method="post" class="hub-compose-form">
+                    <div class="form-group">
+                        <label for="Title">Title</label>
+                        <input id="Title" name="Title" class="form-control dark-input" placeholder="Enter a discussion title" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="TopicTag">Topic</label>
+                        <select id="TopicTag" name="TopicTag" class="form-control dark-input">
+                            <option value="">Select a topic</option>
+                            <option>Data Science</option>
+                            <option>Development</option>
+                            <option>Hardware</option>
+                            <option>Accessories</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="AuthorName">Your Name</label>
+                        <input id="AuthorName" name="AuthorName" class="form-control dark-input" placeholder="Enter your name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Content">Content</label>
+                        <textarea id="Content" name="Content" class="form-control dark-input dark-textarea" rows="5" placeholder="Write your discussion post"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary-xl hub-submit-btn">
+                        Publish Post
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
