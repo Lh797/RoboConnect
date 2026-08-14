@@ -54,7 +54,7 @@ RoboConnect/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/<your-username>/RoboConnect.git
+   git clone https://github.com/Lh797/RoboConnect.git
    cd RoboConnect
    ```
 
